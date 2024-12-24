@@ -89,15 +89,26 @@ namespace FlappyBird
 
         List<PictureBox> Pipes = new List<PictureBox>();
         List<PictureBox> Points = new List<PictureBox>();
+
+        List<PictureBox> removePipeList = new List<PictureBox>();
         private void tmrSlidePipe_Tick(object sender, EventArgs e)
         {
             foreach (var pipe in Pipes)
             {
                 pipe.Location = new Point(pipe.Location.X - 6, pipe.Location.Y);
+                if (pipe.Location.X < -150)
+                {
+                    removePipeList.Add(pipe);
+                }
             }
             foreach (var point in Points)
             {
                 point.Location = new Point(point.Location.X - 6, point.Location.Y);
+            }
+            foreach (var pipe in removePipeList)
+            {
+                this.Controls.Remove(pipe);
+                Pipes.Remove(pipe);
             }
         }
 
